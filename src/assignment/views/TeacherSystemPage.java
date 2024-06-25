@@ -1,21 +1,27 @@
 package assignment.views;
+
 import assignment.models.StudentModel;
+import assignment.models.TeacherModel;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static assignment.models.TeacherModel.teacherModels;
 import static assignment.utils.CustomUI.*;
 
-public class StudentSystemPage extends JFrame implements ActionListener {
+public class TeacherSystemPage extends JFrame implements ActionListener {
+
 
     static Label labelTitle = new Label();
     static JTextField textFieldId = new JTextField();
     static JTextField textFieldFName = new JTextField();
     static JTextField textFieldLName = new JTextField();
     static JTextField textFieldDate = new JTextField();
-    
+
     static JTextField textFieldPhone = new JTextField();
     static JTextField textFieldEmail = new JTextField();
     static JTextField textFieldAddress = new JTextField();
@@ -34,18 +40,16 @@ public class StudentSystemPage extends JFrame implements ActionListener {
     static Button buttonLogout = new Button("Logout NO");
     static Button buttonExit = new Button("Logout NO");
     static Choice choiceCourse= new Choice();
-    static Choice choiceTime= new Choice();
     static CheckboxGroup checkboxGroup = new CheckboxGroup();
     static Checkbox checkbox1 = new Checkbox();
     static Checkbox checkbox2 = new Checkbox();
-    static ArrayList<StudentModel > studentModels = new ArrayList<>();
 
-    public static void studentSystem() {
+    public static void teacherPage() {
         frame = getjFrame();
         customDisplayData(textArea,frame,450,150,810,500);
-        loadImage(new JLabel(),labelX,150,500,500,frame,"assets/EMIS_Homepage_2-e1458668348754-1180x531.jpg");
-        customLabel(new Label(),labelX,70,labelW,labelH,0,frame,fontSmallMonospaced,secondaryColor,whiteColors,"Student Page");
-        customLabel(new Label(),300,110,labelW-10,labelH,2,frame,fontSmallMonospaced,secondaryColor,whiteColors,"Search Student");
+        loadImage(new JLabel(),labelX,150,500,500,frame,"assets/istockphoto-1436392629-612x612.jpg");
+        customLabel(new Label(),labelX,70,labelW,labelH,0,frame,fontSmallMonospaced,secondaryColor,whiteColors,"Teacher Page");
+        customLabel(new Label(),300,110,labelW-10,labelH,2,frame,fontSmallMonospaced,secondaryColor,whiteColors,"Search Teacher");
         customTextField(textFieldSearch,null,450,110,490,35,frame,fontSmallMonospaced);
         customButton(buttonSearch,950,110,150,35,frame,grayColors,"Search");
         customButton(buttonRefresh,1110,110,150,35,frame,grayColors,"Refresh");
@@ -61,20 +65,20 @@ public class StudentSystemPage extends JFrame implements ActionListener {
         buttonAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addStudentPage();
+                addTeacherPage();
             }
         });
         buttonU.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = JOptionPane.showInputDialog(null,"Find Id to update");
-                for (StudentModel s : studentModels) {
+                for (TeacherModel s : teacherModels) {
                     if (s.getId() == Integer.parseInt(id)) {
-                        updateStudentPage(s.getId(),s.getGender(),s.getFirstName(),s.getLastName(),s.getDate(),s.getEmail(),s.getPhone(),s.getAddress(),s.getMajorId(),s.getLearnTime());
+                        updateTeacherPage(s.getId(),s.getGender(),s.getFirstName(),s.getLastName(),s.getDate(),s.getEmail(),s.getPhone(),"",s.getSkill());
                         return;
                     }
                 }
-                if(studentModels.isEmpty()){
+                if(teacherModels.isEmpty()){
                     JOptionPane.showMessageDialog(null,"Student isEmpty");
                 } else {
                     JOptionPane.showMessageDialog(null,"ID Not found 404!");
@@ -85,10 +89,11 @@ public class StudentSystemPage extends JFrame implements ActionListener {
             static int id = 1;
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textFieldId.getText().isEmpty() || checkboxGroup.getSelectedCheckbox() == null || choiceCourse.getSelectedItem() == "Select")
+
+                if(textFieldId.getText().isEmpty() || checkboxGroup.getSelectedCheckbox() == null || Objects.equals(choiceCourse.getSelectedItem(), "Select"))
                     JOptionPane.showMessageDialog(null, "Filed is Requieerid");
                 else {
-                    StudentModel studentModel = new StudentModel(
+                    TeacherModel teacherModel = new TeacherModel(
                             Integer.parseInt(textFieldId.getText()),
                             textFieldFName.getText(),
                             textFieldLName.getText(),
@@ -97,14 +102,14 @@ public class StudentSystemPage extends JFrame implements ActionListener {
                             textFieldEmail.getText(),
                             textFieldAddress.getText(),
                             choiceCourse.getSelectedItem(),
-                            textFieldDate.getText(),
-                            choiceTime.getSelectedItem()
+                            textFieldDate.getText()
                     );
-                    studentModels.add(studentModel);
+                    teacherModels.add(teacherModel);
                     textArea.setText("");
-                    for (int i = 0; i < studentModels.size(); i++) {
-                        textArea.append(studentModels.get(i).display());
+                    for (int i = 0; i<teacherModels.size();i++){
+                        textArea.append(teacherModels.get(i).display());
                     }
+
                     id++;
                     textFieldId.setText("");
                     textFieldFName.setText("");
@@ -147,38 +152,36 @@ public class StudentSystemPage extends JFrame implements ActionListener {
         buttonBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               frame.dispose();
-               frame.toBack();
+                frame.dispose();
+                frame.toBack();
             }
         });
         buttonUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StudentModel studentModel = new StudentModel();
-                for(int i=0; i<studentModels.size(); i++){
-                    if(studentId == studentModels.get(i).getId()){
-                        if(textFieldId.getText().isEmpty() || checkboxGroup.getSelectedCheckbox() == null || Objects.equals(choiceCourse.getSelectedItem(), "Select"))
+                TeacherModel teacherModel = new TeacherModel();
+                for(int i=0; i<teacherModels.size(); i++){
+                    if(studentId == teacherModels.get(i).getId()){
+                        if(textFieldId.getText().isEmpty() || checkboxGroup.getSelectedCheckbox() == null)
                         JOptionPane.showMessageDialog(null, "Filed is Requieerid");
-                        else{
-                            studentModel.updateData(
+                        else {
+                            teacherModel.updateData(
                                     textFieldId.getText(),
                                     textFieldFName.getText(),
                                     textFieldLName.getText(),
                                     checkboxGroup.getCurrent().getLabel(),
                                     textFieldPhone.getText(),
                                     textFieldEmail.getText(),
-                                    textFieldAddress.getText(),
                                     choiceCourse.getSelectedItem(),
-                                    textFieldDate.getText(),
-                                    choiceTime.getSelectedItem()
+                                    textFieldDate.getText()
                             );
+                            teacherModels.set(i,teacherModel);
                         }
-                        studentModels.set(i,studentModel);
                     }
                 }
                 textArea.setText("");
-                for (int i = 0; i<studentModels.size();i++){
-                    textArea.append(studentModels.get(i).display());
+                for (int i = 0; i<teacherModels.size();i++){
+                    textArea.append(teacherModels.get(i).display());
                 }
                 textFieldId.setText("");
                 textFieldFName.setText("");
@@ -195,8 +198,8 @@ public class StudentSystemPage extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 textFieldSearch.setText("");
                 textArea.setText("");
-                for (StudentModel studentModel : studentModels) {
-                    textArea.append(studentModel.display());
+                for (TeacherModel teacherModel : teacherModels) {
+                    textArea.append(teacherModel.display());
                 }
             }
         });
@@ -204,7 +207,7 @@ public class StudentSystemPage extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textArea.setText("");
-                for(StudentModel s : studentModels){
+                for(TeacherModel s : teacherModels){
                     if(textFieldSearch.getText().equals(s.getFirstName()+" "+ s.getLastName())){
                         textArea.append(s.display());
                     }
@@ -215,31 +218,29 @@ public class StudentSystemPage extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = JOptionPane.showInputDialog(null,"Find Id to delete");
-                for (int i=0; i<studentModels.size();i++) {
-                    if (studentModels.get(i).getId() == Integer.parseInt(id)) {
-                        int a = JOptionPane.showConfirmDialog(null,studentModels.get(i).display());
+                for (int i=0; i<teacherModels.size();i++) {
+                    if (teacherModels.get(i).getId() == Integer.parseInt(id)) {
+                        int a = JOptionPane.showConfirmDialog(null,teacherModels.get(i).display());
                         if(a == JOptionPane.YES_OPTION){
-                            studentModels.remove(i);
+                            teacherModels.remove(i);
                         }
                         return;
                     }
                 }
-                if(studentModels.isEmpty()){
+                if(teacherModels.isEmpty()){
                     JOptionPane.showMessageDialog(null,"Student isEmpty");
                 } else {
                     JOptionPane.showMessageDialog(null,"ID Not found 404!");
                 }
             }
         });
-
     }
     public static int studentId;
-    public static void addStudentPage(){
+    public static void addTeacherPage(){
         jframe = getFrameClose();
-        customLabel(new Label(),0,0,systemW/2,50,1,jframe,fontMediumMonospaced,primaryColor,whiteColors,"ADD New Student");
-        customLabel(new Label(),labelX,70,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Student ID");
-        customLabel(new Label(),300,70,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Department");
-        customLabel(new Label(),450,70,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Time");
+        customLabel(new Label(),0,0,systemW/2,50,1,jframe,fontMediumMonospaced,primaryColor,whiteColors,"ADD New Teacher");
+        customLabel(new Label(),labelX,70,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Teacher ID");
+        customLabel(new Label(),300,70,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Skill");
         customLabel(new Label(),labelX,150,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Firstname");
         customLabel(new Label(),300,150,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Lastname");
         customLabel(new Label(),labelX,230,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Gender");
@@ -251,13 +252,12 @@ public class StudentSystemPage extends JFrame implements ActionListener {
         customTextField(textFieldId,textFieldFName,labelX,110,textFieldW,textFieldH,jframe,fontSmallMonospaced);
         customTextField(textFieldFName,textFieldLName,labelX,190,textFieldW,textFieldH,jframe,fontSmallMonospaced);
         customTextField(textFieldLName,textFieldDate,300,190,textFieldW,textFieldH,jframe,fontSmallMonospaced);
-        customTextField(textFieldDate,textFieldEmail,labelX,350,textFieldW,textFieldH,jframe,fontSmallMonospaced);
         customCheckBox(jframe,checkboxGroup,checkbox1,checkbox2,false,false);
+        customTextField(textFieldDate,textFieldEmail,labelX,350,textFieldW,textFieldH,jframe,fontSmallMonospaced);
         customTextField(textFieldEmail,textFieldPhone,labelX,430,textFieldW,textFieldH,jframe,fontSmallMonospaced);
         customTextField(textFieldPhone,textFieldAddress,300,430,textFieldW,textFieldH,jframe,fontSmallMonospaced);
         customTextField(textFieldAddress,null,labelX,510,textFieldW,textFieldH,jframe,fontSmallMonospaced);
-        customSelected(choiceCourse,jframe,fontSmallMonospaced,300,110,labelW-50,labelH,StudentModel.majorList,0);
-        customSelected(choiceTime,jframe,fontSmallMonospaced,450,110,labelW-50,labelH,StudentModel.timeList,0);
+        customSelected(choiceCourse,jframe,fontSmallMonospaced,300,110,labelW-50,labelH,TeacherModel.subjectList,0);
 
         customButton(buttonAdds,labelX,600,buttonW,buttonH,jframe,grayColors,"Done");
         customButton(buttonExits,labelX+buttonW,600,buttonW,buttonH,jframe,grayColors,"Close");
@@ -270,8 +270,8 @@ public class StudentSystemPage extends JFrame implements ActionListener {
         });
 
     }
-    public static void updateStudentPage(int id,String gender,String firstName, String lastName,String date,String email,String phone,String address,String major,String time){
-       jframe = getFrameClose();
+    public static void updateTeacherPage(int id,String gender,String firstName, String lastName,String date,String email,String phone,String address,String major){
+        jframe = getFrameClose();
         int index = 3;
         studentId = id;
         boolean sex = false;
@@ -283,14 +283,9 @@ public class StudentSystemPage extends JFrame implements ActionListener {
                 index = i;
             }
         }
-        for(int j=0; j<StudentModel.timeList.size(); j++){
-            if(Objects.equals(time, StudentModel.timeList.get(j))){
-                index = j;
-            }
-        }
 
-        customLabel(new Label(),0,0,systemW/2,50,1,jframe,fontMediumMonospaced,primaryColor,whiteColors,"Update Student Data");
-        customLabel(new Label(),labelX,70,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Student ID");
+        customLabel(new Label(),0,0,systemW/2,50,1,jframe,fontMediumMonospaced,primaryColor,whiteColors,"Update Teacher Data");
+        customLabel(new Label(),labelX,70,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Teacher ID");
         customLabel(new Label(),300,70,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Department");
         customLabel(new Label(),labelX,150,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Firstname");
         customLabel(new Label(),300,150,labelW,labelH,0,jframe,fontSmallMonospaced,secondaryColor,whiteColors,"Lastname");
@@ -308,17 +303,15 @@ public class StudentSystemPage extends JFrame implements ActionListener {
         textFieldAddress.setText(address);
         textFieldDate.setText(date);
         checkbox1.setFocusable(true);
-
         customTextField(textFieldId,textFieldFName,labelX,110,textFieldW,textFieldH,jframe,fontSmallMonospaced);
         customTextField(textFieldFName,textFieldLName,labelX,190,textFieldW,textFieldH,jframe,fontSmallMonospaced);
         customTextField(textFieldLName,textFieldDate,300,190,textFieldW,textFieldH,jframe,fontSmallMonospaced);
-        customCheckBox(jframe,checkboxGroup,checkbox1,checkbox2,sex,!sex);
+        customCheckBox(jframe,checkboxGroup,checkbox1,checkbox2,false,false);
         customTextField(textFieldDate,textFieldEmail,labelX,350,textFieldW,textFieldH,jframe,fontSmallMonospaced);
         customTextField(textFieldEmail,textFieldPhone,labelX,430,textFieldW,textFieldH,jframe,fontSmallMonospaced);
         customTextField(textFieldPhone,textFieldAddress,300,430,textFieldW,textFieldH,jframe,fontSmallMonospaced);
         customTextField(textFieldAddress,null,labelX,510,textFieldW,textFieldH,jframe,fontSmallMonospaced);
-        customSelected(choiceCourse,jframe,fontSmallMonospaced,300,110,labelW-50,labelH,StudentModel.majorList,index);
-        customSelected(choiceTime,jframe,fontSmallMonospaced,450,110,labelW-50,labelH,StudentModel.timeList,index);
+        customSelected(choiceCourse,jframe,fontSmallMonospaced,300,110,labelW-50,labelH,TeacherModel.subjectList,index);
 
         customButton(buttonUpdate,labelX,600,buttonW,buttonH,jframe,grayColors,"Update");
         customButton(buttonExits,labelX+buttonW,600,buttonW,buttonH,jframe,grayColors,"Close");
@@ -327,6 +320,6 @@ public class StudentSystemPage extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
     }
     public static void main(String[] args) {
-        StudentSystemPage.studentSystem();
+        TeacherSystemPage.teacherPage();
     }
 }

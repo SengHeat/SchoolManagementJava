@@ -1,6 +1,8 @@
 package assignment.views;
 
 
+import assignment.utils.CustomUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,13 +22,13 @@ public class LoginSystemPage extends JFrame implements ActionListener {
     static Button buttonExit = new Button();
     static JLabel label = new JLabel();
     static public void getLoginPage(){
-        JFrame frame = getjFrame();
+        frame = getjFrame();
         customLabel(labelTitle,0,0,1300,50,1,frame,fontLargeMonospaced,secondaryColor,whiteColors,"Student Management System");
         customLabel(new Label(),650,179,400,50,1,frame,fontLargeMonospaced,backgroundColor,whiteColors,"Login");
         customLabel(new Label(),670,320,labelW-5,labelH,0,frame,fontSmallMonospaced,backgroundColor,whiteColors,"Username");
         customLabel(new Label(),670,360,labelW-5,labelH,0,frame,fontSmallMonospaced,backgroundColor,whiteColors,"Password");
         JTextField textFieldUser = new JTextField();
-        customTextField(textFieldUser,670+labelW,320,200,textFieldH,frame,fontSmallMonospaced);
+        customTextField(textFieldUser,null,670+labelW,320,200,textFieldH,frame,fontSmallMonospaced);
         JPasswordField jPasswordField = new JPasswordField();
         textFieldUser.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -35,7 +37,6 @@ public class LoginSystemPage extends JFrame implements ActionListener {
                 }
             }
         });
-
         textFieldUser.requestFocus();
         textFieldUser.setCaretPosition(0);
         textFieldUser.setInheritsPopupMenu(true);
@@ -50,10 +51,10 @@ public class LoginSystemPage extends JFrame implements ActionListener {
         showPasswordCheckBox.setText("Show Password");
 
 
-        customButton(buttonLogin,650,530,199,labelH,frame,fontSmallMonospaced,grayColors,"Login");
-        customButton(buttonExit,850,530,199,labelH,frame,fontSmallMonospaced,grayColors,"Exit");
+        customButton(buttonLogin,650,530,199,labelH,frame,grayColors,"Login");
+        customButton(buttonExit,850,530,199,labelH,frame,grayColors,"Exit");
         customContainer(labelContainer,650,230,400,300,frame,backgroundColor);
-        loadImage(label,250,179,400,300,frame,"assets/6_a52d3d34c0.png");
+        loadImage(label,250,179,400,383,frame,"assets/6_a52d3d34c0.png");
         customContainer(labelBg,0,51,1600,900,frame,primaryColor);
 
         showPasswordCheckBox.addActionListener(new ActionListener() {

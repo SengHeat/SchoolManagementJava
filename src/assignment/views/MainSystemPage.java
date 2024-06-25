@@ -12,25 +12,22 @@ public class MainSystemPage extends JFrame implements ActionListener {
     static Label labelBg = new Label();
     static Label labelContainer = new Label();
     static Button buttonStudent = new Button("Student");
-    static Button buttonCourse = new Button("Course NO");
-    static Button buttonScore = new Button("Score NO");
-    static Button buttonMark = new Button("Mark and Sheet");
-    static Button buttonSearch = new Button("Search");
-    static public void mainSystemPage() {
-        JFrame frame = getjFrame();
+    static Button buttonDepartment = new Button("Course NO");
+    static Button buttonPayment = new Button("Course NO");
+    static Button buttonTeacher = new Button();
 
+    static public void mainSystemPage() {
+        frame = getFrameOffAll();
         customLabel(labelTitle,0,0,1300,50,1,frame,fontLargeMonospaced,primaryColor,whiteColors,"School Management System");
 
         //TODO: For Button
-//        loadImage(new JLabel(),20,50,1,2,frame,"assets/RUPP_logo.png");
-
-        customButton(new Button(), labelX, 80, buttonW, buttonH, frame, fontMediumMonospaced, backgroundColor,"Admin DashBord");
-        customButton(buttonStudent, labelX+buttonW, 80, buttonW, buttonH, frame, fontMediumMonospaced, backgroundColor,"Student");
-        customButton(new Button(), labelX+buttonW*2, 80, buttonW, buttonH, frame, fontMediumMonospaced, backgroundColor,"Teacher");
-        customButton(buttonCourse, labelX+buttonW*3, 80, buttonW, buttonH, frame, fontMediumMonospaced, backgroundColor,"Major");
-        customButton(new Button(), labelX+buttonW*4, 80, buttonW, buttonH, frame, fontMediumMonospaced, backgroundColor,"Staff");
-        customButton(new Button(), labelX+buttonW*5, 80, buttonW+40, buttonH, frame, fontMediumMonospaced, backgroundColor,"Setting");
-        loadImage(new JLabel(),0,130,1,1,frame,"assets/celestial-1.png");
+        loadImage(new JLabel(),20,50,1,2,frame,"assets/RUPP_logo.png");
+        customButton(new Button(), labelX, 80, buttonW, buttonH, frame, primaryColor,"Admin DashBord");
+        customButton(buttonStudent, labelX+buttonW, 80, buttonW, buttonH, frame, grayColors,"Student");
+        customButton(buttonTeacher, labelX+buttonW*2, 80, buttonW, buttonH, frame, grayColors,"Teacher");
+        customButton(buttonDepartment, labelX+buttonW*3, 80, buttonW, buttonH, frame, grayColors,"Department");
+        customButton(buttonPayment, labelX+buttonW*4, 80, buttonW, buttonH, frame, grayColors,"Payment");
+        loadImage(new JLabel(),labelX,130,1240,610,frame,"assets/1_z8GxBUFOQOMs8YqCwHLQeQ.jpg");
         //TODO: For Background
 
         customContainer(labelContainer,labelX,122,1240,2,frame,grayColors);
@@ -39,14 +36,31 @@ public class MainSystemPage extends JFrame implements ActionListener {
         buttonStudent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
                 StudentSystemPage.studentSystem();
             }
         });
+        buttonTeacher.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TeacherSystemPage.teacherPage();
+            }
+        });
+        buttonDepartment.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DepartmentSystemPage.departmentSystemPage();
+            }
+        });
+        buttonPayment.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
     }
 
     public static void main(String[] args) {
-//        LoginSystemPage.getLoginPage();
         MainSystemPage.mainSystemPage();
     }
     @Override
