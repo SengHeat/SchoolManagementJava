@@ -11,7 +11,7 @@ public class MainSystemPage extends JFrame implements ActionListener {
     static Label labelTitle = new Label();
     static Label labelBg = new Label();
     static Label labelContainer = new Label();
-    static Button buttonStudent = new Button("Student");
+    static JButton buttonStudent = new JButton();
     static Button buttonDepartment = new Button("Course NO");
     static Button buttonPayment = new Button("Course NO");
     static Button buttonTeacher = new Button();
@@ -23,13 +23,13 @@ public class MainSystemPage extends JFrame implements ActionListener {
         //TODO: For Button
         loadImage(new JLabel(),20,50,1,2,frame,"assets/RUPP_logo.png");
         customButton(new Button(), labelX, 80, buttonW, buttonH, frame, primaryColor,"Admin DashBord");
-        customButton(buttonStudent, labelX+buttonW, 80, buttonW, buttonH, frame, grayColors,"Student");
+//        customButton(buttonStudent, labelX+buttonW, 80, buttonW, buttonH, frame, grayColors,"Student");
         customButton(buttonTeacher, labelX+buttonW*2, 80, buttonW, buttonH, frame, grayColors,"Teacher");
         customButton(buttonDepartment, labelX+buttonW*3, 80, buttonW, buttonH, frame, grayColors,"Department");
         customButton(buttonPayment, labelX+buttonW*4, 80, buttonW, buttonH, frame, grayColors,"Payment");
-        loadImage(new JLabel(),labelX,130,1240,610,frame,"assets/1_z8GxBUFOQOMs8YqCwHLQeQ.jpg");
+        customImageLabel(new JLabel(),labelX,50,1240,300,frame,"assets/1_z8GxBUFOQOMs8YqCwHLQeQ.jpg");
+        customImageButton(buttonStudent,50,350,150,150,frame,"assets/5850276.png","Student");
         //TODO: For Background
-
         customContainer(labelContainer,labelX,122,1240,2,frame,grayColors);
         customContainer(labelBg,0,0,1300,800,frame,backgroundColor);
 

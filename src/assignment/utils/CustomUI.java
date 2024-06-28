@@ -3,11 +3,15 @@ package assignment.utils;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
+import java.util.function.Function;
+
 public class CustomUI {
     static String fontFamily = "Serif";
     public static Font fontExtraSmallMonospaced = new Font(fontFamily, Font.PLAIN, 12);
@@ -131,6 +135,7 @@ public class CustomUI {
             image = ImageIO.read(new File(fileName));
             label = new JLabel(new ImageIcon(image));
             image.setAccelerationPriority(0.5F);
+            label.setPreferredSize(new Dimension(w, h));
             label.setBackground(backgroundColor);
             image.setAccelerationPriority(2);
             label.setBounds(x,y,w,h);
@@ -146,6 +151,53 @@ public class CustomUI {
         }
         return label;
     }
+    public static JLabel customImageLabel(JLabel jButton, int x, int y, int w, int h, JFrame jFrame, String fileName) {
+        ImageIcon originalIcon = new ImageIcon(fileName);
+        Image originalImage = originalIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        jButton.setIcon(scaledIcon);
+        jButton.setBounds(x, y, w, h);
+        jButton.setPreferredSize(new Dimension(w, h));
+
+        // Optional: If you want to set a text label directly on the button
+        jButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        jButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+
+        jFrame.add(jButton);
+
+        return jButton;
+    }
+
+    public static JButton customImageButton(JButton jButton, int x, int y, int w, int h, JFrame jFrame, String fileName,String text) {
+        ImageIcon originalIcon = new ImageIcon(fileName);
+        Image originalImage = originalIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        jButton.setIcon(scaledIcon);
+        jButton.setBounds(x, y, w, h);
+        jButton.setPreferredSize(new Dimension(w, h));
+
+        // Optional: If you want to set a text label directly on the button
+        jButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        jButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+
+        // If you want a separate label below the button
+        JLabel label = new JLabel(text);
+        label.setBounds(x, y + h, w, 30);
+        label.setFont(new Font("Monospaced", Font.PLAIN, 16));  // Assuming fontLargeMonospaced is defined elsewhere
+        label.setForeground(Color.WHITE);  // Assuming whiteColors is Color.WHITE
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+
+        jFrame.add(jButton);
+        jFrame.add(label);
+
+        return jButton;
+    }
+
+//    public static JButton v(Function<String> stringFunction){
+//        return null;
+//    }
 
      public static JFrame getFrameOffAll() {
         JFrame frame = new JFrame();

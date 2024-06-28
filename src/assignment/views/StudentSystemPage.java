@@ -102,8 +102,8 @@ public class StudentSystemPage extends JFrame implements ActionListener {
                     );
                     studentModels.add(studentModel);
                     textArea.setText("");
-                    for (int i = 0; i < studentModels.size(); i++) {
-                        textArea.append(studentModels.get(i).display());
+                    for (StudentModel model : studentModels) {
+                        textArea.append(model.display());
                     }
                     id++;
                     textFieldId.setText("");
@@ -114,19 +114,6 @@ public class StudentSystemPage extends JFrame implements ActionListener {
                     textFieldAddress.setText("");
                     choiceCourse.select(0);
                     jframe.dispose();
-                }
-            }
-        });
-        buttonDelete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int a;
-                a = JOptionPane.showConfirmDialog(null,"Are you sure?");
-                if(a==JOptionPane.YES_OPTION){
-                    System.exit(0);
-                }
-                if(a == JOptionPane.NO_OPTION){
-                    System.out.println("Mae Hg");
                 }
             }
         });
@@ -221,6 +208,10 @@ public class StudentSystemPage extends JFrame implements ActionListener {
                         if(a == JOptionPane.YES_OPTION){
                             studentModels.remove(i);
                         }
+                        textArea.setText("");
+                        for (StudentModel model : studentModels) {
+                            textArea.append(model.display());
+                        }
                         return;
                     }
                 }
@@ -229,9 +220,9 @@ public class StudentSystemPage extends JFrame implements ActionListener {
                 } else {
                     JOptionPane.showMessageDialog(null,"ID Not found 404!");
                 }
+
             }
         });
-
     }
     public static int studentId;
     public static void addStudentPage(){
