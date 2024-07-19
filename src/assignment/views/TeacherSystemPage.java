@@ -47,7 +47,7 @@ public class TeacherSystemPage extends JFrame implements ActionListener {
     public static void teacherPage() {
         frame = getjFrame();
         customDisplayData(textArea,frame,450,150,810,500);
-        loadImage(new JLabel(),labelX,150,500,500,frame,"assets/istockphoto-1436392629-612x612.jpg");
+        customImageLabel(new JLabel(),labelX,150,430,500,frame,"assets/teacher-illustration-1001x1024-plu4q319.png");
         customLabel(new Label(),labelX,70,labelW,labelH,0,frame,fontSmallMonospaced,secondaryColor,whiteColors,"Teacher Page");
         customLabel(new Label(),300,110,labelW-10,labelH,2,frame,fontSmallMonospaced,secondaryColor,whiteColors,"Search Teacher");
         customTextField(textFieldSearch,null,450,110,490,35,frame,fontSmallMonospaced);
@@ -206,10 +206,11 @@ public class TeacherSystemPage extends JFrame implements ActionListener {
         buttonSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                textArea.setText("");
-                for(TeacherModel s : teacherModels){
-                    if(textFieldSearch.getText().equals(s.getFirstName()+" "+ s.getLastName())){
-                        textArea.append(s.display());
+                if(textFieldSearch.getText() != null){
+                    for (TeacherModel s : teacherModels) {
+                        if (textFieldSearch.getText().equals(s.getFirstName() + " " + s.getLastName())) {
+                            textArea.append(s.display());
+                        }
                     }
                 }
             }

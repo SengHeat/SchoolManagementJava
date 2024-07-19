@@ -60,7 +60,7 @@ public class LoginSystemPage extends JFrame implements ActionListener {
         customButton(buttonLogin,650,530,199,labelH,frame,grayColors,"Login");
         customButton(buttonExit,850,530,199,labelH,frame,grayColors,"Exit");
         customContainer(labelContainer,650,230,400,300,frame,backgroundColor);
-        loadImage(label,250,179,400,383,frame,"assets/6_a52d3d34c0.png");
+        customImageLabel(label,250,179,400,383,frame,"assets/6_a52d3d34c0.png");
         customContainer(labelBg,0,51,1600,900,frame,primaryColor);
 
         showPasswordCheckBox.addActionListener(new ActionListener() {

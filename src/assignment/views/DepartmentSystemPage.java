@@ -15,8 +15,9 @@ import static assignment.utils.CustomUI.*;
 
 public class DepartmentSystemPage extends JFrame implements ActionListener {
 
-    public static ArrayList<Button> buttonArrayList = new ArrayList<>();
+    public static ArrayList<JButton> buttonArrayList = new ArrayList<>();
     public static Button buttonBack = new Button();
+    public static Button buttonAdd = new Button();
     public static int finalI1;
 
 
@@ -24,13 +25,14 @@ public class DepartmentSystemPage extends JFrame implements ActionListener {
         CustomUI.frame = CustomUI.getjFrame();
         customLabel(new Label(),0,0,1300,50,1,frame,fontLargeMonospaced,primaryColor,whiteColors,"Department");
         customButton(buttonBack,labelX,700,buttonW,buttonH,frame,grayColors,"Back");
+        customButton(buttonAdd,labelX+buttonW+10,700,buttonW,buttonH,frame,grayColors,"Add Department");
         for (int i = 0; i< majorList.size(); i++){
-            Button button = new Button();
+            JButton button = new JButton();
             buttonArrayList.add(button);
         }
         for(int i = 0; i< majorList.size(); i++){
             if(i!=0){
-                CustomUI.customButton(buttonArrayList.get(i),CustomUI.labelX,40*(i)+60,CustomUI.buttonW,CustomUI.buttonH,CustomUI.frame,CustomUI.grayColors, majorList.get(i));
+                CustomUI.customImageButton(buttonArrayList.get(i),systemW/4*(i>8? i-9 : i>4? i-5 : i-1)+100,i > 8 ? 500 : i>4 ? 300 : 120,systemW/majorList.size(),systemW/majorList.size(),CustomUI.frame, majorImageList.get(i),majorList.get(i));
             } else {
                 CustomUI.customLabel(new Label(),labelX,40*i+50,systemW,50,0,frame,fontMediumMonospaced,secondaryColor,whiteColors,"ALL Department in School");
             }

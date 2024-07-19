@@ -182,15 +182,14 @@ public class CustomUI {
         jButton.setHorizontalTextPosition(SwingConstants.CENTER);
         jButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 
-        // If you want a separate label below the button
         JLabel label = new JLabel(text);
         label.setBounds(x, y + h, w, 30);
-        label.setFont(new Font("Monospaced", Font.PLAIN, 16));  // Assuming fontLargeMonospaced is defined elsewhere
-        label.setForeground(Color.WHITE);  // Assuming whiteColors is Color.WHITE
+        label.setFont(fontMediumMonospaced);  // Assuming fontLargeMonospaced is defined elsewhere
+        label.setForeground(Color.white);  // Assuming whiteColors is Color.WHITE
         label.setHorizontalAlignment(SwingConstants.CENTER);
-
-        jFrame.add(jButton);
-        jFrame.add(label);
+        label.setBackground(backgroundColor);
+        frame.add(jButton);
+        frame.add(label);
 
         return jButton;
     }
@@ -228,7 +227,7 @@ public class CustomUI {
     }
      public static JFrame getFrameClose() {
          JFrame jframe = new JFrame();
-         jframe.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+         jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
          jframe.getContentPane().setBackground(secondaryColor);
          jframe.setSize(600, 700);
          jframe.setVisible(true);

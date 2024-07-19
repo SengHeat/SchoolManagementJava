@@ -1,6 +1,7 @@
 package assignment.views;
 import assignment.models.StudentModel;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -39,11 +40,90 @@ public class StudentSystemPage extends JFrame implements ActionListener {
     static Checkbox checkbox1 = new Checkbox();
     static Checkbox checkbox2 = new Checkbox();
     static ArrayList<StudentModel > studentModels = new ArrayList<>();
+    public static JFrame frame;
+    private static JTable table;
+    private static DefaultTableModel tableModel;
+
+    public StudentSystemPage() {
+        super("Student Data Table");
+        frame = getjFrame(); // Assuming getjFrame() returns a JFrame instance
+
+        tableModel = new DefaultTableModel();
+        tableModel.setColumnIdentifiers(new String[]{"ID", "Name", "Age", "Grade"});
+
+        table = new JTable(tableModel);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.setFillsViewportHeight(true);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(450,150,810,500); // Set bounds for JScrollPane (not for JTable)
+        frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+        // Load sample data
+        loadSampleData();
+        frame.setVisible(true);
+    }
+    private static void loadSampleData() {
+        ArrayList<StudentModel> oldData = StudentModel.readFile("d:\\JavaFile\\assignment\\student.txt");
+        for (StudentModel studentModel  : oldData){
+            tableModel.addRow(new Object[]{studentModel.getId(),studentModel.getFirstName(),studentModel.getLastName(),studentModel.getGender(),studentModel.getDate(),studentModel.getMajorId(),studentModel.getLearnTime(),studentModel.getPhone(),studentModel.getEmail(),studentModel.getAddress()});
+        }
+    }
+
+    private ArrayList<StudentModels> createSampleData() {
+        // Example: Create sample data for demonstration
+        ArrayList<StudentModels> data = new ArrayList<>();
+        data.add(new StudentModels(1, "John Doe", 20, "A"));
+        data.add(new StudentModels(2, "Jane Smith", 22, "B"));
+        data.add(new StudentModels(3, "Michael Johnson", 21, "A+"));
+        return data;
+    }
+    class StudentModels {
+        private int id;
+        private String name;
+        private int age;
+        private String grade;
+
+        public StudentModels(int id, String name, int age, String grade) {
+            this.id = id;
+            this.name = name;
+            this.age = age;
+            this.grade = grade;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+    }
 
     public static void studentSystem() {
         frame = getjFrame();
-        customDisplayData(textArea,frame,450,150,810,500);
-        loadImage(new JLabel(),labelX,150,500,500,frame,"assets/EMIS_Homepage_2-e1458668348754-1180x531.jpg");
+        tableModel = new DefaultTableModel();
+        tableModel.setColumnIdentifiers(new String[]{"ID", "First Name", "Last Name", "Gender","Date of Birth","Department","Time","Number Phone","Email","Address"});
+
+        table = new JTable(tableModel);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.setFillsViewportHeight(true);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(450,150,810,500); // Set bounds for JScrollPane (not for JTable)
+        frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+        // Load sample data
+        loadSampleData();
+        customImageLabel(new JLabel(),labelX,150,430,500,frame,"assets/5850276.png");
         customLabel(new Label(),labelX,70,labelW,labelH,0,frame,fontSmallMonospaced,secondaryColor,whiteColors,"Student Page");
         customLabel(new Label(),300,110,labelW-10,labelH,2,frame,fontSmallMonospaced,secondaryColor,whiteColors,"Search Student");
         customTextField(textFieldSearch,null,450,110,490,35,frame,fontSmallMonospaced);
@@ -69,15 +149,10 @@ public class StudentSystemPage extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 String id = JOptionPane.showInputDialog(null,"Find Id to update");
                 for (StudentModel s : studentModels) {
-                    if (s.getId() == Integer.parseInt(id)) {
+                    if (s.getId() == id) {
                         updateStudentPage(s.getId(),s.getGender(),s.getFirstName(),s.getLastName(),s.getDate(),s.getEmail(),s.getPhone(),s.getAddress(),s.getMajorId(),s.getLearnTime());
                         return;
                     }
-                }
-                if(studentModels.isEmpty()){
-                    JOptionPane.showMessageDialog(null,"Student isEmpty");
-                } else {
-                    JOptionPane.showMessageDialog(null,"ID Not found 404!");
                 }
             }
         });
@@ -85,38 +160,45 @@ public class StudentSystemPage extends JFrame implements ActionListener {
             static int id = 1;
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textFieldId.getText().isEmpty() || checkboxGroup.getSelectedCheckbox() == null || choiceCourse.getSelectedItem() == "Select")
-                    JOptionPane.showMessageDialog(null, "Filed is Requieerid");
-                else {
-                    StudentModel studentModel = new StudentModel(
-                            Integer.parseInt(textFieldId.getText()),
-                            textFieldFName.getText(),
-                            textFieldLName.getText(),
-                            checkboxGroup.getCurrent().getLabel(),
-                            textFieldPhone.getText(),
-                            textFieldEmail.getText(),
-                            textFieldAddress.getText(),
-                            choiceCourse.getSelectedItem(),
-                            textFieldDate.getText(),
-                            choiceTime.getSelectedItem()
-                    );
-                    studentModels.add(studentModel);
-                    textArea.setText("");
-                    for (StudentModel model : studentModels) {
-                        textArea.append(model.display());
-                    }
-                    id++;
-                    textFieldId.setText("");
-                    textFieldFName.setText("");
-                    textFieldLName.setText("");
-                    textFieldPhone.setText("");
-                    textFieldEmail.setText("");
-                    textFieldAddress.setText("");
-                    choiceCourse.select(0);
-                    jframe.dispose();
+                if (textFieldId.getText().isEmpty() ||
+                        checkboxGroup.getSelectedCheckbox() == null ||
+                        "Select".equals(choiceCourse.getSelectedItem())) {
+
+                    JOptionPane.showMessageDialog(null, "All fields are required");
+                } else {
+                        StudentModel studentModel = new StudentModel(
+                                textFieldId.getText(),
+                                textFieldFName.getText(),
+                                textFieldLName.getText(),
+                                checkboxGroup.getSelectedCheckbox().getLabel(),
+                                textFieldPhone.getText(),
+                                textFieldEmail.getText(),
+                                textFieldAddress.getText(),
+                                choiceCourse.getSelectedItem(),
+                                textFieldDate.getText(),
+                                choiceTime.getSelectedItem()
+                        );
+
+                        ArrayList<StudentModel> oldData = StudentModel.readFile("d:\\JavaFile\\assignment\\student.txt");
+                        oldData.add(studentModel);
+                        StudentModel.writeFile("d:\\JavaFile\\assignment\\student.txt",oldData);
+                        textArea.setText("");
+                        for (StudentModel student: oldData){
+                            textArea.append(student.toString());
+                        }
+                        textFieldId.setText("");
+                        textFieldFName.setText("");
+                        textFieldLName.setText("");
+                        textFieldPhone.setText("");
+                        textFieldEmail.setText("");
+                        textFieldAddress.setText("");
+                        choiceCourse.select(0);
+                        jframe.dispose();
                 }
             }
         });
+
+
         buttonExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -181,9 +263,10 @@ public class StudentSystemPage extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textFieldSearch.setText("");
+                ArrayList<StudentModel> oldData = StudentModel.readFile("d:\\JavaFile\\assignment\\student.txt");
                 textArea.setText("");
-                for (StudentModel studentModel : studentModels) {
-                    textArea.append(studentModel.display());
+                for (StudentModel student : oldData){
+                    textArea.append(student.display()+"\n");
                 }
             }
         });
@@ -203,7 +286,7 @@ public class StudentSystemPage extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 String id = JOptionPane.showInputDialog(null,"Find Id to delete");
                 for (int i=0; i<studentModels.size();i++) {
-                    if (studentModels.get(i).getId() == Integer.parseInt(id)) {
+                    if (studentModels.get(i).getId() == id) {
                         int a = JOptionPane.showConfirmDialog(null,studentModels.get(i).display());
                         if(a == JOptionPane.YES_OPTION){
                             studentModels.remove(i);
@@ -224,7 +307,7 @@ public class StudentSystemPage extends JFrame implements ActionListener {
             }
         });
     }
-    public static int studentId;
+    public static String studentId;
     public static void addStudentPage(){
         jframe = getFrameClose();
         customLabel(new Label(),0,0,systemW/2,50,1,jframe,fontMediumMonospaced,primaryColor,whiteColors,"ADD New Student");
@@ -261,7 +344,7 @@ public class StudentSystemPage extends JFrame implements ActionListener {
         });
 
     }
-    public static void updateStudentPage(int id,String gender,String firstName, String lastName,String date,String email,String phone,String address,String major,String time){
+    public static void updateStudentPage(String id,String gender,String firstName, String lastName,String date,String email,String phone,String address,String major,String time){
        jframe = getFrameClose();
         int index = 3;
         studentId = id;
@@ -319,5 +402,6 @@ public class StudentSystemPage extends JFrame implements ActionListener {
     }
     public static void main(String[] args) {
         StudentSystemPage.studentSystem();
+//        new StudentSystemPage();
     }
 }
