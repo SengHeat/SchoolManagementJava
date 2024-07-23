@@ -4,6 +4,7 @@ import assignment.models.StudentModel;
 import assignment.models.TeacherModel;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +27,6 @@ public class TeacherSystemPage extends JFrame implements ActionListener {
     static JTextField textFieldEmail = new JTextField();
     static JTextField textFieldAddress = new JTextField();
     static JTextField textFieldSearch = new JTextField();
-    static TextArea textArea = new TextArea();
 
     static Button buttonSearch = new Button("Search");
     static Button buttonRefresh = new Button("Refresh");
@@ -43,10 +43,26 @@ public class TeacherSystemPage extends JFrame implements ActionListener {
     static CheckboxGroup checkboxGroup = new CheckboxGroup();
     static Checkbox checkbox1 = new Checkbox();
     static Checkbox checkbox2 = new Checkbox();
+    public static JFrame frame;
+    public static JTable table;
+    public static DefaultTableModel tableModel;
 
     public static void teacherPage() {
         frame = getjFrame();
-        customDisplayData(textArea,frame,450,150,810,500);
+
+        tableModel = new DefaultTableModel();
+        tableModel.setColumnIdentifiers(new String[]{"ID", "First Name", "Last Name", "Gender","Date of Birth","Department","Time","Number Phone","Email","Address"});
+
+        table = new JTable(tableModel);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.setFillsViewportHeight(true);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(450,150,810,500); // Set bounds for JScrollPane (not for JTable)
+        frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+        StudentModel.loadSampleData(tableModel);
+
         customImageLabel(new JLabel(),labelX,150,430,500,frame,"assets/teacher-illustration-1001x1024-plu4q319.png");
         customLabel(new Label(),labelX,70,labelW,labelH,0,frame,fontSmallMonospaced,secondaryColor,whiteColors,"Teacher Page");
         customLabel(new Label(),300,110,labelW-10,labelH,2,frame,fontSmallMonospaced,secondaryColor,whiteColors,"Search Teacher");
@@ -105,10 +121,6 @@ public class TeacherSystemPage extends JFrame implements ActionListener {
                             textFieldDate.getText()
                     );
                     teacherModels.add(teacherModel);
-                    textArea.setText("");
-                    for (int i = 0; i<teacherModels.size();i++){
-                        textArea.append(teacherModels.get(i).display());
-                    }
 
                     id++;
                     textFieldId.setText("");
@@ -179,10 +191,6 @@ public class TeacherSystemPage extends JFrame implements ActionListener {
                         }
                     }
                 }
-                textArea.setText("");
-                for (int i = 0; i<teacherModels.size();i++){
-                    textArea.append(teacherModels.get(i).display());
-                }
                 textFieldId.setText("");
                 textFieldFName.setText("");
                 textFieldLName.setText("");
@@ -197,10 +205,6 @@ public class TeacherSystemPage extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textFieldSearch.setText("");
-                textArea.setText("");
-                for (TeacherModel teacherModel : teacherModels) {
-                    textArea.append(teacherModel.display());
-                }
             }
         });
         buttonSearch.addActionListener(new ActionListener() {
@@ -209,7 +213,6 @@ public class TeacherSystemPage extends JFrame implements ActionListener {
                 if(textFieldSearch.getText() != null){
                     for (TeacherModel s : teacherModels) {
                         if (textFieldSearch.getText().equals(s.getFirstName() + " " + s.getLastName())) {
-                            textArea.append(s.display());
                         }
                     }
                 }

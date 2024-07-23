@@ -1,5 +1,8 @@
 package assignment.models;
 
+import assignment.utils.CustomUI;
+
+import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,50 +34,6 @@ public class StudentModel {
         this.majorId = majorId;
         this.date = date;
         this.learnTime = learnTime;
-    }
-
-    public void updateData(String id, String firstName, String lastName, String gender, String phone, String email, String address, String majorId, String date, String learnTime) {
-        setId(id);
-        setFirstName(firstName);
-        setLastName(lastName);
-        setGender(gender);
-        setPhone(phone);
-        setEmail(email);
-        setAddress(address);
-        setMajorId(majorId);
-        setDate(date);
-        setLearnTime(learnTime);
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    public void setMajorId(String majorId) {
-        this.majorId = majorId;
-    }
-    public void setLearnTime(String learnTime) {
-        this.learnTime = learnTime;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
     public String getDate() {
         return date;
@@ -110,6 +69,13 @@ public class StudentModel {
 
     public String display(){
         return getId()+"\t"+getFirstName()+" "+getLastName()+"\t"+getGender()+"\t"+getMajorId()+"\t"+getLearnTime()+"\t"+getPhone()+"\t"+getEmail()+"\t"+getAddress()+"\n";
+    }
+
+    public static void loadSampleData(DefaultTableModel tableModel){
+        ArrayList<StudentModel> oldData = StudentModel.readFile(CustomUI.baseFile+CustomUI.getStudent);
+        for (StudentModel studentModel  : oldData){
+            tableModel.addRow(new Object[]{studentModel.getId(),studentModel.getFirstName(),studentModel.getLastName(),studentModel.getGender(),studentModel.getDate(),studentModel.getMajorId(),studentModel.getLearnTime(),studentModel.getPhone(),studentModel.getEmail(),studentModel.getAddress()});
+        }
     }
 
     @Override
@@ -158,6 +124,22 @@ public class StudentModel {
         return content;
     }
 
+    public static void updateStudent(String filePath, String idToUpdate, StudentModel newStudent) {
+        ArrayList<StudentModel> students = readFile(filePath);
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getId().equals(idToUpdate)) {
+                students.set(i, newStudent);  // Update student
+                break;
+            }
+        }
+        writeFile(filePath, students);
+    }
+
+    public static void deleteStudent(String filePath, String idToDelete) {
+        ArrayList<StudentModel> students = readFile(filePath);
+        students.removeIf(student -> student.getId().equals(idToDelete));
+        writeFile(filePath, students);
+    }
     static public final ArrayList<String> majorList = new ArrayList<>(Arrays.asList("Select", "Computer Science", "Information Technology Engineering", "History", "Math", "Chemistry", "Physics", "Mo", "JO", "KO", "ll", "LL"));
     static public final ArrayList<String> majorImageList = new ArrayList<>(Arrays.asList("Select", "assets\\it_de.png", "assets\\ite_de.png", "assets\\his.jpg", "assets\\math_de.png", "assets\\c.jpg", "assets\\p.png", "", "", "", "", "", ""));
     static public final ArrayList<String> timeList = new ArrayList<>(Arrays.asList("Morning", "Afternoon", "Evening"));

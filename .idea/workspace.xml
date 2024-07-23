@@ -5,19 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a34d999b-817a-4500-8215-1f2ea362c99f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ImageFromFileChooser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ImageFromURL.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/StudentTableApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assignment/models/StudentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment/models/StudentModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assignment/utils/CustomUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment/utils/CustomUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assignment/views/DepartmentSystemPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment/views/DepartmentSystemPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assignment/views/LoginSystemPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment/views/LoginSystemPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assignment/views/MainSystemPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment/views/MainSystemPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assignment/views/StudentSystemPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment/views/StudentSystemPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assignment/views/TeacherSystemPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment/views/TeacherSystemPage.java" afterDir="false" />
     </list>

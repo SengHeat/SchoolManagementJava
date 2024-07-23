@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.function.Function;
 
 public class CustomUI {
+    public static String baseFile = "d:\\JavaFile\\assignment";
+    public static String getStudent = "\\student.txt";
     static String fontFamily = "Serif";
     public static Font fontExtraSmallMonospaced = new Font(fontFamily, Font.PLAIN, 12);
     public static Font fontSmallMonospaced = new Font(fontFamily, Font.BOLD, 16);

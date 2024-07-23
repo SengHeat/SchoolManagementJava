@@ -20,7 +20,6 @@ public class DepartmentSystemPage extends JFrame implements ActionListener {
     public static Button buttonAdd = new Button();
     public static int finalI1;
 
-
     static public void departmentSystemPage(){
         CustomUI.frame = CustomUI.getjFrame();
         customLabel(new Label(),0,0,1300,50,1,frame,fontLargeMonospaced,primaryColor,whiteColors,"Department");
